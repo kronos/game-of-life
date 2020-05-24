@@ -9,10 +9,10 @@ pub struct Vector {
 impl Storage for Vector {
     fn new(size: usize) -> Self {
         return Vector {
-            data: vec![false; size*2],
+            data: vec![false; size * 2],
             offset: 0,
-            size
-        }
+            size,
+        };
     }
 
     fn get(&self, index: usize) -> bool {

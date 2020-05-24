@@ -5,13 +5,13 @@ use quicksilver::{
     run, Result, Settings, Window,
 };
 
-mod universe;
 mod storage;
+mod universe;
 
 use rand::Rng;
 use stopwatch::Stopwatch;
-use universe::Universe;
 use storage::Storage;
+use universe::Universe;
 
 static OFFSET: i32 = 2;
 static SIDE: i32 = 5;
@@ -54,7 +54,7 @@ fn draw<T: Storage>(universe: &Universe<T>, gfx: &mut Graphics) {
 async fn app(window: Window, mut gfx: Graphics, mut input: Input) -> Result<()> {
     let mut sw = Stopwatch::new();
     let mut started = false;
-    let mut universe = Universe::<storage::Vector>::new(WIDTH as usize, HEIGHT as usize);
+    let mut universe = Universe::<storage::BitVector>::new(WIDTH as usize, HEIGHT as usize);
     let mut rng = rand::thread_rng();
 
     universe.init(move |i, j| -> bool { rng.gen_range(0, i + j + 1) < (i + j) / 2 });

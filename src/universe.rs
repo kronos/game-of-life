@@ -1,6 +1,3 @@
-// mod storage;
-
-//use self::storage::Storage;
 use crate::storage::Storage;
 
 pub struct Universe<T: Storage> {
@@ -16,11 +13,11 @@ impl<T: Storage> Universe<T> {
             storage: T::new(size),
             width,
             height,
-        }
+        };
     }
 
     pub fn alive(&self, row: usize, col: usize) -> bool {
-        self.storage.get(row*self.width + col)
+        self.storage.get(row * self.width + col)
     }
 
     pub fn refresh(&mut self) {
@@ -41,7 +38,10 @@ impl<T: Storage> Universe<T> {
                     }
                 }
 
-                self.storage.set(idx, (current_alive && alive_around == 2) || alive_around == 3);
+                self.storage.set(
+                    idx,
+                    (current_alive && alive_around == 2) || alive_around == 3,
+                );
                 idx += 1
             }
         }
@@ -52,7 +52,9 @@ impl<T: Storage> Universe<T> {
         let mut idx = 0;
         for i in 0..self.height {
             for j in 0..self.width {
-                self.storage.set(idx, f(i, j));
+                if f(i, j) {
+                    self.storage.set(idx, true);
+                }
                 idx += 1
             }
         }
@@ -62,6 +64,7 @@ impl<T: Storage> Universe<T> {
     pub fn width(&self) -> usize {
         return self.width;
     }
+
     pub fn height(&self) -> usize {
         return self.height;
     }

@@ -1,8 +1,7 @@
+mod bitvector;
 mod vector;
 
-pub use self::{
-    vector::Vector,
-};
+pub use self::{bitvector::BitVector, vector::Vector};
 
 pub trait Storage {
     fn new(size: usize) -> Self;
