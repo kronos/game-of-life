@@ -6,10 +6,12 @@ use quicksilver::{
 };
 
 mod universe;
+mod storage;
 
 use rand::Rng;
 use stopwatch::Stopwatch;
 use universe::Universe;
+use storage::Storage;
 
 static OFFSET: i32 = 2;
 static SIDE: i32 = 5;
@@ -32,7 +34,7 @@ fn main() {
     );
 }
 
-fn draw(universe: &Universe, gfx: &mut Graphics) {
+fn draw<T: Storage>(universe: &Universe<T>, gfx: &mut Graphics) {
     let mut y = OFFSET;
     gfx.clear(Color::BLACK);
     for i in 0..universe.height() {
@@ -52,7 +54,7 @@ fn draw(universe: &Universe, gfx: &mut Graphics) {
 async fn app(window: Window, mut gfx: Graphics, mut input: Input) -> Result<()> {
     let mut sw = Stopwatch::new();
     let mut started = false;
-    let mut universe = Universe::new(WIDTH as usize, HEIGHT as usize);
+    let mut universe = Universe::<storage::Vector>::new(WIDTH as usize, HEIGHT as usize);
     let mut rng = rand::thread_rng();
 
     universe.init(move |i, j| -> bool { rng.gen_range(0, i + j + 1) < (i + j) / 2 });
